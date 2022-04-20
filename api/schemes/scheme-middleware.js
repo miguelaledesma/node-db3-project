@@ -1,4 +1,5 @@
 const db = require('../../data/db-config')
+const Scheme = require('./scheme-model'); 
 
 /*
   If `scheme_id` does not exist in the database:
@@ -36,7 +37,13 @@ const checkSchemeId = async (req, res, next) => {
   }
 */
 const validateScheme = (req, res, next) => {
-  next()
+  const {scheme_name} = req.body 
+
+  if(scheme_name === undefined || typeof scheme_name !== 'string'){
+    return res.status(400).json({"message": "invalid scheme_name"})
+  } else {
+    next()
+  }
 }
 
 /*
