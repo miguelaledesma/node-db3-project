@@ -125,7 +125,19 @@ async function findById(scheme_id) { // EXERCISE B
   */
 }
 
-function findSteps(scheme_id) { // EXERCISE C
+async function findSteps(scheme_id) { // EXERCISE C
+
+  let rows = await db('schemes as sc')
+  .leftJoin('steps as st','sc.scheme_id','st.scheme_id')
+  .where('sc.scheme_id',scheme_id)
+  .orderBy('st.step_number')
+  .select('sc.scheme_name', 'st.*')
+
+  if (!rows[0].step_id){
+    return []
+  }
+
+  return rows 
     
   /*
     1C- Build a query in Knex that returns the following data.
