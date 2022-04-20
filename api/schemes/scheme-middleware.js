@@ -1,3 +1,4 @@
+const e = require('express');
 const db = require('../../data/db-config')
 const Scheme = require('./scheme-model'); 
 
@@ -56,7 +57,13 @@ const validateScheme = (req, res, next) => {
   }
 */
 const validateStep = (req, res, next) => {
-  next()
+  const {step_number, instructions} = req.body; 
+
+  if(instructions === undefined || typeof step_number != 'number' || step_number > 1 ){
+    return res.status(400).json({"message": "invalid step"})
+  } else {
+    next()
+  }
 }
 
 module.exports = {

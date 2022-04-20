@@ -133,7 +133,7 @@ async function findSteps(scheme_id) { // EXERCISE C
   .orderBy('st.step_number')
   .select('sc.scheme_name', 'st.*')
 
-  if (!rows[0].step_id){
+  if(!rows[0].step_id){
     return []
   }
 
@@ -141,7 +141,10 @@ async function findSteps(scheme_id) { // EXERCISE C
     
   /*
     1C- Build a query in Knex that returns the following data.
-    The steps should be sorted by step_number, and the array
+    The steps should be sorted by step_number,
+    
+    
+    and the array
     should be empty if there are no steps for the scheme:
 
       [
@@ -162,6 +165,13 @@ async function findSteps(scheme_id) { // EXERCISE C
 }
 
 function add(scheme) { // EXERCISE D
+  return db('schemes')
+    .insert(scheme)
+    .then(([scheme_id]) => { // eslint-disable-line
+      return db('schemes').where('scheme_id', scheme_id).first()
+    })
+
+
   /*
     1D- This function creates a new scheme and resolves to _the newly created scheme_.
   */
